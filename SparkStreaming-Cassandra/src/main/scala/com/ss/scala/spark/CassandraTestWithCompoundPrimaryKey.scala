@@ -10,11 +10,11 @@ import com.datastax.spark.connector.streaming._
 object CassandraTestWithCompoundPrimaryKey extends App {
 
     /* Cassandra connection properties */
-    System.setProperty("spark.cassandra.connection.host", "13.92.96.123")
+    System.setProperty("spark.cassandra.connection.host", "13.92.96.XXX")
     System.setProperty("spark.cassandra.connection.port", "10350")
-    System.setProperty("spark.cassandra.auth.username", "cassandratest")
+    System.setProperty("spark.cassandra.auth.username", "docdbaccount")
     System.setProperty("spark.cassandra.auth.password",
-    "bI51WUWssPUaVhP9pgpGVMJXlQhWKWz8NOZdfsGiCPGbSDQMxe1MWUF02f2yp3twtp5FLGntLOLZGJmggOe5MQ==")
+        "password")
 
     val host = "localhost:2181" // zookeeper host and port
 
