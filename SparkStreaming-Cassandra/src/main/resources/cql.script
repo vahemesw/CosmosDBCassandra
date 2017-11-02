@@ -1,0 +1,31 @@
+create keyspace demo with
+replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+
+CREATE TABLE demo.visitdetails (
+    user_id text PRIMARY KEY,
+    event_id int,
+    ip text,
+    site text,
+    time bigint
+);
+
+CREATE TABLE demo.itemdata(
+    item_brand_name ascii,
+    item_name varchar,
+    item_price float,
+    available_units double,
+    expired boolean,
+    rack_number smallint,
+    PRIMARY KEY (item_brand_name, item_name, item_price)
+)WITH default_time_to_live = 3600;
+
+
+CREATE TABLE demo.compound_primarykey_test (
+    item_brand_name text,
+    item_name varchar,
+    rack_number smallint,
+    available_units double,
+    expired boolean,
+    item_price float,
+    PRIMARY KEY ((item_brand_name, item_name), rack_number)
+);
