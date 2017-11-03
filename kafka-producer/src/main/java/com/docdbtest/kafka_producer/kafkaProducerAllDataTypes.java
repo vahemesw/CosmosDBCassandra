@@ -31,16 +31,11 @@ public class kafkaProducerAllDataTypes {
 		
 		Random rnd = new Random();
 		for (int nEvent = 0; nEvent < events; nEvent++) {
-
 			String item_brand_name = brandNames[rnd.nextInt(brandNames.length)];
 			String item_name = itemNames[(nEvent%itemNames.length)];
 			float item_price = 20*rnd.nextFloat();
-			//String availability_details = (nEvent%2 ==0) ? "No" : "yes";
 			double available_units = 500*rnd.nextDouble();
 			boolean expired = (nEvent%2 ==0) ? true : false;
-			//UUID item_id = UUID.randomUUID();
-			//String order_from_ip = "2001:0000:3238:DFE1:63:0000:0000:FEFB";
-			//double ordered_units = 500*rnd.nextDouble();
 			int rack_number = rnd.nextInt(10);
 
 			// send message eg., 'RST,toys,13.215782,226.27475541089382,true,1'
