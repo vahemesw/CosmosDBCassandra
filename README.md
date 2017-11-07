@@ -22,10 +22,10 @@ The samples injest Kafka brokers data to Spark to be written into Cosmos DB usin
 ### Setting up kafka producer
 1. Install and start kafka and zookeeper - see here for installation steps on windows - https://dzone.com/articles/running-apache-kafka-on-windows-os 
 
-2. Create the folowing topics on your kafka cluster `pagevisit-docdb-data` and `all-data-types`
+2. Create the folowing topics on your kafka cluster `pagevisit-data` and `all-data-types`
   Navigate to bin directory of your kafka installation and run the following commands
 ```
-kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic pagevisit-docdb-data
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic pagevisit-data
 kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic all-data-types
 ```
 
@@ -37,7 +37,7 @@ kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --pa
 $\CosmosDB-Cassandra\kafka-producer>mvn clean compile package
 ```
 
-5. Alternatively run the `KafkaDataProducer.java` program on local box to produce data for topic `pagevisit-docdb-data`.
+5. Alternatively run the `KafkaDataProducer.java` program on local box to produce data for topic `pagevisit-data`.
  Likewise `kafkaProducerAllDataTypes.java` produces data for topic `all-data-types`
 
 ### Creating required tables in Cassandra

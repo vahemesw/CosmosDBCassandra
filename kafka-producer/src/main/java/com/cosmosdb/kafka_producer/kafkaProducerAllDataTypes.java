@@ -23,7 +23,7 @@ public class kafkaProducerAllDataTypes {
 		// replace with kafka brokers of the kafka cluster
 		properties.put("metadata.broker.list", "localhost:9092");
 		properties.put("serializer.class", "kafka.serializer.StringEncoder");
-		properties.put("client.id","docdbdataproducer");
+		properties.put("client.id","dataproducer");
 		properties.put("request.required.acks", "1");
 		ProducerConfig producerConfig = new ProducerConfig(properties);
 		kafka.javaapi.producer.Producer<String, String> producer = new kafka.javaapi.producer.Producer<String, String>(

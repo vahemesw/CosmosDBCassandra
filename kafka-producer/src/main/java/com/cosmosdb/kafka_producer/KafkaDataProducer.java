@@ -6,7 +6,7 @@ import kafka.producer.ProducerConfig;
 
 public class KafkaDataProducer {
 	
-	private static final String topic = "pagevisit-docdb-data";
+	private static final String topic = "pagevisit-data";
 	private static final String[] visitedSites = {"www.site1.com",
 			"www.site2.com","www.site3.com","www.site4.com","www.site5.com"	};
 	
@@ -21,7 +21,7 @@ public class KafkaDataProducer {
 		// replace with kafka brokers
 		properties.put("metadata.broker.list", "localhost:9092");
 		properties.put("serializer.class", "kafka.serializer.StringEncoder");
-		properties.put("client.id","docdbdataproducer");
+		properties.put("client.id","dataproducer");
 		properties.put("request.required.acks", "1");
 		ProducerConfig producerConfig = new ProducerConfig(properties);
 		kafka.javaapi.producer.Producer<String, String> producer = new kafka.javaapi.producer.Producer<String, String>(
