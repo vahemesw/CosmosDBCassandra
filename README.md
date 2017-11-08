@@ -17,7 +17,7 @@ The samples injest Kafka brokers data to Spark to be written into Cosmos DB usin
 * SparkStreaming-Cassandra folder contains sample commands to save and query data from cosmos DB using Cassandra APIs
 
 ## Setup and building the code
-1. Clone this repository using `git clone https://github.com/vahemesw/DocDBCassandra.git`
+1. Clone this repository using `git clone https://github.com/vahemesw/CosmosDBCassandra.git`
 
 ### Setting up kafka producer
 1. Install and start kafka and zookeeper - see here for installation steps on windows - https://dzone.com/articles/running-apache-kafka-on-windows-os 
