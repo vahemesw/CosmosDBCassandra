@@ -9,24 +9,24 @@ import com.datastax.spark.connector.streaming._
 
 object SimpleCassandraSaver extends App {
 
-    System.setProperty("spark.cassandra.connection.host", "13.92.96.XXX")
+    System.setProperty("spark.cassandra.connection.host", "13.92.96.123")
     System.setProperty("spark.cassandra.connection.port", "10350")
-    System.setProperty("spark.cassandra.auth.username", "docdbaccount")
+    System.setProperty("spark.cassandra.auth.username", "cassandratest")
     System.setProperty("spark.cassandra.auth.password",
-        "password")
+        "bI51WUWssPUaVhP9pgpGVMJXlQhWKWz8NOZdfsGiCPGbSDQMxe1MWUF02f2yp3twtp5FLGntLOLZGJmggOe5MQ==")
 
     val conf = new SparkConf().setMaster("local[2]").setAppName("SimpleCassandraSaver")
     val ssc = new StreamingContext(conf, Seconds(5))
 
     val host = "localhost:2181"
-    val topic = "pagevisit-docdb-data"
+    val topic = "pagevisit-data"
     println("CREATING STREAMING CONTEXT")
     val lines = KafkaUtils.createStream(ssc, host, topic, Map(topic -> 1)).map(_._2)
     lines.print(5)
 
 
     // To save data with columns specified
-    val data = lines.map(l => l.split(",")).map(a => (a(0).toInt,a(1).toLong,  a(2).toString, a(3).toString, a(4).toString)).saveToCassandra("demo", "visitdetails", SomeColumns("event_id", "time", "site", "ip", "user_id"))
+    val data = lines.map(l => l.split(",")).map(a => (a(0).toInt, a(1).toLong,  a(2).toString, a(3).toString, a(4).toString)).saveToCassandra("demo", "visitdetails", SomeColumns("event_id", "time", "site", "ip", "user_id"))
 
 
     // To select data based on primary key
