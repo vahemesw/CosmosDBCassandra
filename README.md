@@ -48,16 +48,32 @@ $\CosmosDB-Cassandra\kafka-producer>mvn clean compile package
 
 ### Saving and querying data from Cosmos - DB using Cassandra APIs
 
-8. Modify the following 4 properties to point to Cosmos BD Cassandra instance
+8. Modify the values in SparkStreaming-Cassandra/src/main/resources/application.conf to your connection strings from portal.
 ```
-    System.setProperty("spark.cassandra.connection.host", "13.92.96.123")
-    System.setProperty("spark.cassandra.connection.port", "10350")
-    System.setProperty("spark.cassandra.auth.username", "<cosmos db account name>")
-    System.setProperty("spark.cassandra.auth.password", "<cosmos db account password>")
+spark{
+	cassandra{
+		connection{
+			host = <cassandra host endpoint>
+			port = <cassandra port>
+			ssl{
+				enabled = true
+				enabledAlgorithms = TLS_RSA_WITH_AES_128_CBC_SHA
+				trustStore{
+					path = "<cacert path / self signed cert truststore path>"
+					password = <your truststore password>
+				}
+			}
+		}
+		auth{
+			username = <cosmos db account name>
+			password = <cosmos db account password>
+		}
+	}
+}
 ```
-9. Modify the setMaster value to point to the Spark cluster in case you are not running spark on your dev-machine
+9. Modify the setMaster value to point to the Spark cluster in case you are not running spark on your dev-machine here - SparkStreaming-Cassandra/src/main/scala/com/ss/scala/spark/ConfInitializer.scala 
 ```
-  val conf = new SparkConf().setMaster("local[2]").setAppName("SimpleCassandraSaver")
+  val conf = new SparkConf().....setMaster("local[2]").setAppName("cassandra-cosmosdb")
 ```
 10. Run the following command from root of SparkStreaming-Cassandra
 ```
