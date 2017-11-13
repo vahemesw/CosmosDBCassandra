@@ -9,14 +9,7 @@ import com.datastax.spark.connector.streaming._
 
 object SimpleCassandraSaver extends App {
 
-    /* Cassandra connection properties */
-    System.setProperty("spark.cassandra.connection.host", "13.92.96.XXX")
-    System.setProperty("spark.cassandra.connection.port", "10350")
-    System.setProperty("spark.cassandra.auth.username", "docdbaccount")
-    System.setProperty("spark.cassandra.auth.password",
-        "password")
-
-    val conf = new SparkConf().setMaster("local[2]").setAppName("SimpleCassandraSaver")
+    val conf = ConfInitializer.getSparkCassandraConf()
     val ssc = new StreamingContext(conf, Seconds(5))
 
     val host = "localhost:2181"
@@ -32,13 +25,8 @@ object SimpleCassandraSaver extends App {
 
     // To select data based on primary key
     val rdd = ssc.cassandraTable("demo", "visitdetails").select("site", "ip").where("user_id = 'user1'").collect().foreach(println)
-
-
-    /* requires ALLOW FILTERING and TOKEN support
-    val usagerdd = ssc.cassandraTable("demo", "visitdetails").select("user_id", "ip").where("site= 'www.site3.com'").collect().foreach(println)
-    */
-
-
+    
+    // To delete based on the primary key
     ssc.cassandraTable("demo", "visitdetails").where("user_id = 'user3'").deleteFromCassandra("demo", "visitdetails")
 
     ssc.start()

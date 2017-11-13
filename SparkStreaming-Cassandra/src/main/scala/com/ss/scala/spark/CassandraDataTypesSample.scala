@@ -7,18 +7,11 @@ import com.datastax.spark.connector._
 import com.datastax.spark.connector.writer._
 import com.datastax.spark.connector.streaming._
 
-object CassandraTestAllDataTypes extends App {
-
-    /* Cassandra connection properties */
-    System.setProperty("spark.cassandra.connection.host", "13.92.96.XXX")
-    System.setProperty("spark.cassandra.connection.port", "10350")
-    System.setProperty("spark.cassandra.auth.username", "docdbaccount")
-    System.setProperty("spark.cassandra.auth.password",
-        "password")
+object CassandraDataTypesSample extends App {
 
     val host = "localhost:2181" // zookeeper host and port
 
-    val conf = new SparkConf().setMaster("local[2]").setAppName("various-data-type-reader")
+    val conf = ConfInitializer.getSparkCassandraConf()
     val ssc = new StreamingContext(conf, Seconds(5))
 
     val topic = "all-data-types" // the topic to listen to
@@ -49,14 +42,6 @@ object CassandraTestAllDataTypes extends App {
     // LIMIT the select results
     val deficit_rdd = ssc.cassandraTable("demo", "itemdata").select("item_name", "available_units")
             .where("item_brand_name = 'ABC' and available_units <= 80").limit(2).collect().foreach(println)
-
-
-    /* requires ALLOW FILTERING and TOKEN support
-    println("Get items with units available > 10")
-    val abundant_items_rdd = ssc.cassandraTable("demo", "itemdata").select("item_name", "available_units")
-        .where("available_units >= 10").collect()
-    abundant_items_rdd.take(5).foreach(println)
-    */
 
 
     // delete all columns based on condition

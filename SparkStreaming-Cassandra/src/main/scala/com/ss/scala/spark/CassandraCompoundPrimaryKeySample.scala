@@ -7,18 +7,11 @@ import com.datastax.spark.connector._
 import com.datastax.spark.connector.writer._
 import com.datastax.spark.connector.streaming._
 
-object CassandraTestWithCompoundPrimaryKey extends App {
-
-    /* Cassandra connection properties */
-    System.setProperty("spark.cassandra.connection.host", "13.92.96.XXX")
-    System.setProperty("spark.cassandra.connection.port", "10350")
-    System.setProperty("spark.cassandra.auth.username", "docdbaccount")
-    System.setProperty("spark.cassandra.auth.password",
-        "password")
+object CassandraCompoundPrimaryKeySample extends App {
 
     val host = "localhost:2181" // zookeeper host and port
 
-    val conf = new SparkConf().setMaster("local[2]").setAppName("tests-with-compound-primary-key")
+    val conf = ConfInitializer.getSparkCassandraConf()
     val ssc = new StreamingContext(conf, Seconds(5))
 
     val topic = "all-data-types" // the topic to listen to
@@ -45,13 +38,7 @@ object CassandraTestWithCompoundPrimaryKey extends App {
         .limit(3).collect().foreach(println)
 
 
-    /* requires ALLOW FILTERING and TOKEN support
-    val deficit_rdd = ssc.cassandraTable("demo", "compound_primarykey_test").select("item_name", "available_units", "rack_number")
-            .where("available_units >= 20")
-            .limit(3).collect().foreach(println)
-    */
-
-    // query based on cluster key TODO - modify query to have IN
+    // query based on cluster key TODO
     val abundant_items_rdd = ssc.cassandraTable("demo", "compound_primarykey_test")
         .select("expired", "available_units")
         .where("item_brand_name = 'MNO' and item_name = 'cots' and rack_number = 3")
