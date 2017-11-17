@@ -105,5 +105,3 @@ Enter number:
 ## More information
 
 - [Azure Cosmos DB](https://docs.microsoft.com/azure/cosmos-db/introduction)
-
-# CosmosDBCassandra
